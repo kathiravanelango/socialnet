@@ -1,0 +1,40 @@
+{% extends 'users/base.html'%}
+
+{% block content %}
+
+<div class="row justify-content-center mt-4 mb-4">
+    <div class="col-md-6">
+        <h2>Sign up</h2>
+        <hr>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="">Username</label>
+                <input type="text" name="username" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="">First Name</label>
+                <input type="text" name="firstname" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="">Last Name</label>
+                <input type="text" name="lastname" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="">email</label>
+                <input type="email" name="email" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="">password</label>
+                <input type="password" name="password" class="form-control" required>
+            </div>
+            <button class="btn btn-primary" type="submit">Submit</button>
+        </form>
+        <div class="row d-flex mt-2">
+            <p class="ml-3">Already have an Account?</p>
+            <a class="ml-3" href="/login/">Login</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

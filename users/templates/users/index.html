@@ -1,0 +1,19 @@
+{% extends 'users/base.html'%}
+
+{% block content %}
+
+<div class="row justify-content-center mt-4">
+    {% if user.is_authenticated %}
+    <div class="d-flex justify-content-between">
+        <h2>Welcome {{user.first_name}}</h2>
+    </div>
+    <hr>
+
+    {% else %}
+    <div class="col-md-6">
+
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}
