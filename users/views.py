@@ -46,6 +46,7 @@ def signupView(request):
         profile = Profile.objects.create(user=user)
         profile.save()
         return redirect('loginView')
+    return render(request,'users/signup.html')        
 
 @login_required
 def profileView(request):
