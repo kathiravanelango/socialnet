@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from .forms import PostForm
+from .models import Post
 
 # Create your views here.
 def newPostView(request):
@@ -16,3 +17,7 @@ def newPostView(request):
         
     form = PostForm()
     return render(request,'posts/newPost.html',{'form':form})
+
+def singlePostView(request,id):
+    post = Post.objects.get(pk=id)
+    return render(request,'posts/singlePost.html',{'post':post})
