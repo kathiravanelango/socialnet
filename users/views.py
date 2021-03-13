@@ -4,10 +4,12 @@ from django.contrib.auth import authenticate, login,logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Profile
+from posts.models import Post
 
 def indexView(request):
     if(request.user.is_authenticated):
-        pass
+        posts = Post.objects.all()
+        return render(request,'users/index.html',{'posts':posts})
     return render(request,'users/index.html')
 
 def loginView(request):
@@ -50,5 +52,6 @@ def signupView(request):
 
 @login_required
 def profileView(request):
-    # post
-    return render(request,'users/profile.html',{})
+    posts = request.user.post_set.all().order_by('-date_posted')
+    print(posts)
+    return render(request,'users/profile.html',{'posts'  : posts })
