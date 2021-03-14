@@ -8,7 +8,7 @@ from posts.models import Post
 
 def indexView(request):
     if(request.user.is_authenticated):
-        posts = Post.objects.all()
+        posts = Post.objects.all().order_by('-date_posted')
         return render(request,'users/index.html',{'posts':posts})
     return render(request,'users/index.html')
 
