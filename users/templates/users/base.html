@@ -42,7 +42,7 @@
 
                 {% if user.is_authenticated %}
                 <li class="nav-item">
-                    <a class="nav-link" href="/profile">My Profile</a>
+                    <a class="nav-link" href="/{{user.username}}">My Profile</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/post/new">New Post</a>

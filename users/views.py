@@ -1,6 +1,9 @@
 from django.shortcuts import render , redirect
+from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login,logout
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Profile
@@ -29,6 +32,20 @@ def loginView(request):
 
 	return render(request,'users/login.html')
 
+def changePasswordView(request):
+	if request.method == 'POST':
+		form = PasswordChangeForm(request.user,request.POST)
+		if form.is_valid():
+			user = form.save()
+			update_session_auth_hash(request,user)
+			messages.success(request, 'Your password was successfully updated!')
+			return redirect('/')
+		else:
+			return render(request,'users/changePassword.html',{'form':form})
+
+	form = PasswordChangeForm(request.user)
+	return render(request,'users/changePassword.html',{'form':form})
+
 def logoutView(request):
 	logout(request)
 	return redirect('indexView')
@@ -52,9 +69,16 @@ def signupView(request):
 	return render(request,'users/signup.html')        
 
 @login_required
-def profileView(request):
-	posts = request.user.post_set.all().order_by('-date_posted')
-	return render(request,'users/profile.html',{'posts'  : posts })
+def profileView(request,usr):
+	user = User.objects.filter(username=usr).first()
+	posts = user.post_set.all().order_by('-date_posted')
+	if user is not None:
+		context={
+			'userobj': user,
+			'posts'  : posts 
+		}
+		return render(request,'users/profile.html',context)	
+	return HttpResponse('404')
 
 @login_required
 def profileEditView(request):

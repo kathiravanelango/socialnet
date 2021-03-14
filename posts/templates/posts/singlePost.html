@@ -7,13 +7,11 @@
 		<div class="post-container mt-4">
 			<div class="post-header">
 				<div class="post-user-image">
-					<a href="/user/{{post.author}}">
-						<img width="40" height="40" class="rounded-circle" src="{{post.author.profile.image.url}}"
+					<img width="40" height="40" style="object-fit:cover;" class="rounded-circle account-img" src="{{post.author.profile.image.url}}"
 							alt="">
-					</a>
 				</div>
 				<div class="post-author">
-					<h6>{{post.author}}</h6>
+					<a href="/{{post.author}}"><h6>{{post.author}}</h6></a>
 				</div>
 				<div>
 					{% if post.author == user %}

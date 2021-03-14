@@ -1,24 +1,26 @@
 {% extends 'users/base.html'%}
 
-{% block title %} {{user.first_name}} {{user.last_name}} (@{{user.username}}) {% endblock %}
+{% block title %} {{userobj.first_name}} {{userobj.last_name}} (@{{userobj.username}}) {% endblock %}
 {% block content %}
 
 <div class="row d-flex justify-content-center">
     <div class="total-container mt-3">
         <div class="profile-details">
             <div class="profile-image">
-                <img height="100" width="100" style="object-fit:cover;" class="rounded-circle account-img" src="{{user.profile.image.url}}">
+                <img height="100" width="100" style="object-fit:cover;" class="rounded-circle account-img" src="{{userobj.profile.image.url}}">
             </div>
             <div class="profile-info ml-3">
                 <h3 class="ml-1">{{user.username}}</h3>
-                <a class="text-info font-weight-bold btn-sm text-decoration-none" href="/profile/edit">Edit</a>
+                {% if userobj == user %}
+                    <a class="text-info font-weight-bold btn-sm text-decoration-none" href="/profile/edit">Edit</a>
+                {% endif %}
             </div>
         </div>
 
         <div class="bio-container ml-2">
-            <h6>{{user.first_name}} {{user.last_name}}</h6>
+            <h6>{{userobj.first_name}} {{userobj.last_name}}</h6>
             <div>
-                <p>{{user.profile.bio}}</p>
+                <p>{{userobj.profile.bio}}</p>
             </div>
         </div>
         <div class="profile-posts-container">
