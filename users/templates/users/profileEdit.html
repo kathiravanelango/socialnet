@@ -1,0 +1,29 @@
+{% extends 'users/base.html'%}
+{% block title %} {{user.first_name}} {{user.last_name}} (@{{user.username}}) {% endblock %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="row justify-content-center mt-4 mb-5">
+	<div class="col-md-6">
+		<div class="d-flex align-items-center">
+			<div class="">
+			<img  height="100" width="100" style="object-fit:cover;" class="rounded-circle account-img" src="{{user.profile.image.url}}">
+			</div>
+			<div class="ml-3">
+				<h3>{{user.username}}</h3>
+				<small class="text-muted">{{user.email}}</small>		
+			</div>
+		</div>
+		
+		
+		<hr>
+		<form method="post" enctype="multipart/form-data" enctype="multipart/form-data">
+			{% csrf_token %}
+            {{user_form | crispy}}
+            {{profile_form | crispy}}
+			<button class="btn btn-primary">Update</button>
+		</form>
+	</div>
+</div>
+
+{% endblock %}
