@@ -18,7 +18,7 @@
 				<div>
 					{% if post.author == user %}
 					<a href="/post/{{post.id}}/edit" class="btn btn-secondary btn-sm">Edit</a>
-					<a href="/post/{{post.id}}/delete" class="btn btn-danger btn-sm">Delete</a>
+					<a href="#" onclick="handleDelete(this)" class="btn btn-danger btn-sm">Delete</a>
 					{% endif %}
 				</div>
 			</div>
@@ -34,4 +34,15 @@
 		</div>
 	</div>
 </div>
+
+<script>
+	const deleteUrl = `/post/{{post.id}}/delete`
+
+	function handleDelete(event){
+		const choice = confirm('Do you want to Delete this Post?')
+		if(choice) 
+			window.location.href = deleteUrl
+	}
+</script>
+
 {% endblock %}

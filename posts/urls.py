@@ -1,9 +1,9 @@
 from django.urls import include, path
-from .views import newPostView , singlePostView, editPostView
+from .views import newPostView , singlePostView, editPostView,deletePostView
 
 urlpatterns = [
     path('new/',newPostView,name="newPostView" ),
     path('<int:id>/',singlePostView,name="singlePostView" ),
     path('<int:id>/edit/',editPostView,name="editPostView" ),
-    # path('delete/',logoutView,name="logoutView" ),
+    path('<int:id>/delete/',deletePostView,name="deletePostView" ),
 ]

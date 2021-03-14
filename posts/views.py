@@ -1,5 +1,6 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import PostForm
 from .models import Post
@@ -36,7 +37,7 @@ def editPostView(request,id):
     except:
         return HttpResponse('404')
 
-    if(post.author != request.user):
+    if post.author != request.user:
         return HttpResponse('403')
 
     if(request.method == 'POST'):
@@ -49,3 +50,18 @@ def editPostView(request,id):
 
     form = PostForm(instance=post)
     return render(request,'posts/newPost.html',{'form':form})
+
+
+def deletePostView(request,id):
+    try:
+        post = Post.objects.get(pk=id)
+    except:
+        return HttpResponse('404')
+
+    if post.author != request.user:
+        return HttpResponse('403')
+
+    post.delete()
+    messages.info(request,f'Post Deleted!')
+    return redirect(f'/profile')
+
