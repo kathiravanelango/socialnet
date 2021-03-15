@@ -71,8 +71,8 @@ def signupView(request):
 @login_required
 def profileView(request,usr):
 	user = User.objects.filter(username=usr).first()
-	posts = user.post_set.all().order_by('-date_posted')
 	if user is not None:
+		posts = Post.objects.filter(author=user)
 		context={
 			'userobj': user,
 			'posts'  : posts 
