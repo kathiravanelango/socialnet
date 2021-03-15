@@ -26,7 +26,7 @@ def singlePostView(request,id):
     try:
         post = Post.objects.get(pk=id)
     except:
-        return HttpResponse('404')
+        return HttpResponse(f'Post does not Exists',status=404)
     return render(request,'posts/singlePost.html',{'post':post})
 
 
@@ -35,10 +35,10 @@ def editPostView(request,id):
     try:
         post = Post.objects.get(pk=id)
     except:
-        return HttpResponse('404')
+        return HttpResponse(f'Post does not Exists',status=404)
 
     if post.author != request.user:
-        return HttpResponse('403')
+        return HttpResponse('Un Authorized Access',status=403)
 
     if(request.method == 'POST'):
         form = PostForm(request.POST,request.FILES,instance=post)
@@ -56,10 +56,10 @@ def deletePostView(request,id):
     try:
         post = Post.objects.get(pk=id)
     except:
-        return HttpResponse('404')
+        return HttpResponse(f'Post does not Exists',status=404)
 
     if post.author != request.user:
-        return HttpResponse('403')
+        return HttpResponse('Un Authorized Access',status=403)
 
     post.delete()
     messages.info(request,f'Post Deleted!')
