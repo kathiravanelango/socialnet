@@ -11,26 +11,30 @@ from posts.models import Post
 from .forms import UserUpdateForm,ProfileUpdateForm
 
 def indexView(request):
-	if(request.user.is_authenticated):
+	if request.user.is_authenticated:
 		posts = Post.objects.all().order_by('-date_posted')
 		return render(request,'users/index.html',{'posts':posts})
 	return render(request,'users/index.html')
 
 def loginView(request):
-	if(request.method == 'POST'):
+	if request.user.is_authenticated:
+		return redirect('indexView')
+		
+	if request.method == 'POST':
 		username = request.POST.get('username')
 		password = request.POST.get('password')
 		user = authenticate(request, username=username, password=password)
 		if user is not None:
 			login(request, user)
 			next = request.GET.get('next')
-			if(next):
+			if next:
 				return redirect(next)
 			return redirect('indexView')
 		else:
 		   messages.warning(request,f'Username and Password combination does not match')
 
 	return render(request,'users/login.html')
+
 
 def changePasswordView(request):
 	if request.method == 'POST':
@@ -46,12 +50,18 @@ def changePasswordView(request):
 	form = PasswordChangeForm(request.user)
 	return render(request,'users/changePassword.html',{'form':form})
 
+
+@login_required
 def logoutView(request):
 	logout(request)
 	return redirect('indexView')
 
+
 def signupView(request):
-	if(request.method == 'POST'):
+	if request.user.is_authenticated:
+		return redirect('indexView')
+
+	if request.method == 'POST':
 		username = request.POST.get('username')
 		firstname = request.POST.get('firstname')
 		lastname = request.POST.get('lastname')
@@ -68,17 +78,19 @@ def signupView(request):
 		return redirect('loginView')
 	return render(request,'users/signup.html')        
 
+
 @login_required
 def profileView(request,usr):
 	user = User.objects.filter(username=usr).first()
 	if user is not None:
-		posts = Post.objects.filter(author=user)
+		posts = Post.objects.filter(author=user).order_by('-date_posted')
 		context={
 			'userobj': user,
 			'posts'  : posts 
 		}
 		return render(request,'users/profile.html',context)	
-	return HttpResponse('404')
+	return HttpResponse(f'No user Exists with a name of {usr}',status=404)
+
 
 @login_required
 def profileEditView(request):
