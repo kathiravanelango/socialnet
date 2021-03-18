@@ -91,7 +91,7 @@ def profileEditView(request):
 			user_form.save()
 			profile_form.save()
 			messages.success(request,f'Profile Successfully Updated')
-			return redirect('/profile')		
+			return redirect('profileView',request.user.username)		
 
 	user_form = UserUpdateForm(instance=request.user)
 	profile_form = ProfileUpdateForm(instance=request.user.profile)
