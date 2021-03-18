@@ -26,7 +26,7 @@ SECRET_KEY = 'cptvhr-pot+0%-+!&afs1df%0l3_+8a3&h$_0fecg%m^bp-v_o'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['djangosocialnet.herokuapp.com']
 
 
 # Application definition
