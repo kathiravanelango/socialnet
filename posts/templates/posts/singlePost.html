@@ -16,7 +16,7 @@
 				<div>
 					{% if post.author == user %}
 					<a href="/post/{{post.id}}/edit" class="btn btn-secondary btn-sm">Edit</a>
-					<a href="/{{post.author}}" onclick="handleDelete(this)" class="btn btn-danger btn-sm">Delete</a>
+					<button onclick="handleDelete()" class="btn btn-danger btn-sm">Delete</button>
 					{% endif %}
 				</div>
 			</div>

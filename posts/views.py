@@ -63,5 +63,5 @@ def deletePostView(request,id):
 
     post.delete()
     messages.info(request,f'Post Deleted!')
-    return redirect(f'/profile')
+    return redirect(f'/{request.user.username}')
 
