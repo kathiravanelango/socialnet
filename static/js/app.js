@@ -1,20 +1,10 @@
-const userImg  =  document.getElementById('user-image');
-const dropDownDiv  =  document.getElementById('dropdown');
+const postsContainer = document.querySelector('.infinite-container')
+const nextPostBtn = document.querySelector('#loadMore')
 
-
-if (userImg){
-	userImg.onclick = (e) => {
-  		dropDownDiv.classList.toggle('show');
-  		return false
-	}
-
+async function getNextPosts() {
+    const response = await fetch('/post/getmore')
+    const data = await response.json()
+    console.log(data)
 }
-// takes care to close the dropdown if user clicks out of dropdown, when it is displyed
-window.onclick = function(event) {
-  // cheak if the dropdown in displayed  
-  if(dropDownDiv.classList.contains('show')){
-    if (event.target.id!=='dropdown' && event.target.id!=='user-image' && event.target.id!=='user-name' && event.target.id!=='dropdown-img' && event.target.id!=='user-email' ) {
-      dropDownDiv.classList.toggle('show');
-    }
-  }
-}
+
+nextPostBtn.addEventListener('click', getNextPosts)

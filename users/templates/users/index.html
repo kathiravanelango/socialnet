@@ -2,42 +2,44 @@
 
 {% block content %}
 
-    {% if user.is_authenticated %}
-    <div class="row justify-content-center mb-5">
-        <div class="col-lg-6 col-md-9 mb-4 infinite-container">
-            {% for post in posts %}
-                <div class="post-container mt-4 infinite-item">
-                    <div class="post-header">
-                        <div class="post-user-image">
-                                <img width="40" height="40" style="object-fit: cover;" class="rounded-circle ml-1" src="{{post.author.profile.image.url}}" alt="">
-                        </div>
-                        <div class="post-author">
-                            <h6><a href="/{{post.author}}">{{post.author}}</a></h6>
-                        </div>
-                    </div>
-                    <div class="post-image">
-                        <img src="{{post.image.url}}" alt="">
-                    </div>
-                    <div class="post-caption">
-                        <p>{{post.caption}}</p>
-                            <small class="text-muted" style="font-size:x-small;">
-                                {{post.date_posted| date:"l N d, Y"}}
-                            </small>
-                    </div>
+{% if user.is_authenticated %}
+<div class="row justify-content-center mb-5">
+    <div class="col-lg-6 col-md-9 mb-4 infinite-container">
+        {% for post in posts %}
+        <div class="post-container mt-4 infinite-item">
+            <div class="post-header">
+                <div class="post-user-image">
+                    <img width="40" height="40" style="object-fit: cover;" class="rounded-circle ml-1"
+                        src="{{post.author.profile.image.url}}" alt="">
                 </div>
-            {% endfor %}
+                <div class="post-author">
+                    <h6><a href="/{{post.author}}">{{post.author}}</a></h6>
+                </div>
+            </div>
+            <div class="post-image">
+                <img src="{{post.image.url}}" alt="">
+            </div>
+            <div class="post-caption">
+                <p>{{post.caption}}</p>
+                <small class="text-muted" style="font-size:x-small;">
+                    {{post.date_posted| date:"l N d, Y"}}
+                </small>
+            </div>
         </div>
-        
+        {% endfor %}
+        <button id="loadMore" class="mt-5 btn btn-sm btn-secondary">Load More</button>
     </div>
 
-    {% else %}
-		<div class="row justify-content-center">
-			<div class="col-md-8">
-				<h1 class=" mt-3 display-4">A New World is rising.</h1>
-				<h1 class="display-4">Let’s Discover it</h1>
-				<a class="btn btn-primary btn-lg" href="/signup">Join</a>
-			</div>
-		</div>
-	{% endif %}
+</div>
+
+{% else %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <h1 class=" mt-3 display-4">A New World is rising.</h1>
+        <h1 class="display-4">Let’s Discover it</h1>
+        <a class="btn btn-primary btn-lg" href="/signup">Join</a>
+    </div>
+</div>
+{% endif %}
 
 {% endblock %}
