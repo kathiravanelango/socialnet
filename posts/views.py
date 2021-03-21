@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import PostForm
 from .models import Post
+from .utils import serializeManyPosts
 
 # Create your views here.
 @login_required
@@ -68,5 +69,9 @@ def deletePostView(request,id):
 def getMorePostsView(request):
     if not request.user.is_authenticated:
         return JsonResponse({'report':False,'message':'User not Authenticated'})
-        
-    return JsonResponse({'report':True,'posts':[]})
+
+    page_num = int(request.GET.get('page_num',2))   
+    posts, has_more, next_page = Post.paginate(page_num=page_num)
+    posts = serializeManyPosts(posts)
+
+    return JsonResponse({'report':True,'posts':posts,'has_more':has_more,'next_page':next_page})
